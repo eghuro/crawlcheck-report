@@ -1,0 +1,50 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="body-content">
+  <div class="row">
+    <h1>Transactions</h1>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="/transaction">Transactions</a></li>
+        <li><a href="/finding">Findings</a></li>
+    </ul>
+
+    <table border="1" class="table table-striped table-bordered">
+        <thead><tr>
+            <th>URI</th>
+            <th class="dropdown">
+               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Status
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="dtype">
+                    <li>foo</li>
+                    <li>bar</li>
+                </ul>
+            </th>
+            <th class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopus="true" aria-expanded="false">
+                    Content type
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="dtype">
+                    <li>lorem</li>
+                    <li>ipsum</li>
+                </ul>
+            </th>
+        </tr></thead>
+
+        <tbody>
+            <tr>
+                <td>uri</td>
+                <td>status</td>
+                <td>content type</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
