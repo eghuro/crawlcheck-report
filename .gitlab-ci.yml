@@ -3,5 +3,6 @@ image: "python:3.5"
 stages:
     - test
  
-test:
-    - python manage.py cov
+testcov:
+    stage: test
+    script: python manage.py cov
