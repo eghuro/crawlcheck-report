@@ -32,3 +32,7 @@ def about():
 @main_blueprint.route('/transaction')
 def transactions():
     return render_template('main/transaction.html')
+
+@main_blueprint.route('/finding')
+def findings():
+    return render_template('main/finding.html')
