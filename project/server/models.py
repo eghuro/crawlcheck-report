@@ -38,3 +38,53 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {0}>'.format(self.email)
+
+
+class Transaction(db.Model):
+
+    __tablename__ = "transactions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    method = db.Column(db.String(10), nullable=False)
+    uri = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.Integer)
+    ctype = db.Column(db.String(255))
+    verificationStatusId = db.Column(db.Integer)
+    depth = db.Column(db.Integer, nullable=False)
+
+
+class Finding(db.Model):
+
+    __tablename__ = "finding"
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    responseId = db.Column(db.Integer, nullable=False)
+
+
+class Link(db.Model):
+
+    __tablename__ = "link"
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    toUri = db.Column(db.String(255), nullable=False)
+    processed = db.Column(db.Boolean, nullable=False)
+    requestId = db.Column(db.Integer)
+
+
+class DefectType(db.Model):
+
+    __tablename__ = "defectType"
+
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    type = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String)
+
+
+class Defect(db.Model):
+
+    __tablename__ = "defect"
+
+    findingId = db.Column(db.Integer, primary_key=True, nullable=False)
+    type = db.Column(db.Integer, nullable=False)
+    evidence = db.Column(db.String, nullable=False)
+    severity = db.Column(db.Numeric, nullable=False)
