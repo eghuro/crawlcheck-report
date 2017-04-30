@@ -36,3 +36,7 @@ def transactions():
 @main_blueprint.route('/finding')
 def findings():
     return render_template('main/finding.html')
+
+@main_blueprint.route('/finding/<tid>')
+def finding_detail(tid):
+    return render_template('main/finding_detail.html', transaction=tid)
