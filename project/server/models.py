@@ -52,6 +52,15 @@ class Transaction(db.Model):
     verificationStatusId = db.Column(db.Integer)
     depth = db.Column(db.Integer, nullable=False)
 
+    def __init__(self, id, method, uri, status, ctype, vsi, depth):
+        self.id = id
+        self.method = method
+        self.uri = uri
+        self.status = status
+        self.ctype = ctype
+        self.verificationStatusId = vsi
+        self.depth = depth
+
 
 class Finding(db.Model):
 
@@ -59,6 +68,10 @@ class Finding(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     responseId = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, id, responseId):
+        self.id = id
+        self.responseId = responseId
 
 
 class Link(db.Model):
@@ -70,6 +83,12 @@ class Link(db.Model):
     processed = db.Column(db.Boolean, nullable=False)
     requestId = db.Column(db.Integer)
 
+    def __init__(self, id, toUri, processed, requestId):
+        self.id = id
+        self.toUri = toUri
+        self.processed = processed
+        self.requestId = requestId
+
 
 class DefectType(db.Model):
 
@@ -78,6 +97,11 @@ class DefectType(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     type = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String)
+
+    def __init__(self, id, type, desc):
+        self.id = id
+        self.type = type
+        self.desc = desc
 
 
 class Defect(db.Model):
@@ -88,3 +112,9 @@ class Defect(db.Model):
     type = db.Column(db.Integer, nullable=False)
     evidence = db.Column(db.String, nullable=False)
     severity = db.Column(db.Numeric, nullable=False)
+
+    def __init__(self, findingId, type, evidence, severity):
+        self.findingId = findingId
+        self.type = type
+        self.evidence = evidence
+        self.severity = severity
