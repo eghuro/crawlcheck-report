@@ -62,46 +62,24 @@ class Transaction(db.Model):
         self.depth = depth
 
 
-class Finding(db.Model):
-
-    __tablename__ = "finding"
-
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    responseId = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, id, responseId):
-        self.id = id
-        self.responseId = responseId
-
-
 class Link(db.Model):
 
     __tablename__ = "link"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
+    fromUri = db.Column(db.String(255), nullable=False)
     toUri = db.Column(db.String(255), nullable=False)
     processed = db.Column(db.Boolean, nullable=False)
     requestId = db.Column(db.Integer)
+    responseId = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, id, toUri, processed, requestId):
+    def __init__(self, id, fromUri, toUri, processed, requestId, responseId):
         self.id = id
         self.toUri = toUri
+        self.fromUri = fromUri
         self.processed = processed
         self.requestId = requestId
-
-
-class DefectType(db.Model):
-
-    __tablename__ = "defectType"
-
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    type = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String)
-
-    def __init__(self, id, type, desc):
-        self.id = id
-        self.type = type
-        self.desc = desc
+        self.responseId = responseId
 
 
 class Defect(db.Model):
@@ -109,12 +87,18 @@ class Defect(db.Model):
     __tablename__ = "defect"
 
     findingId = db.Column(db.Integer, primary_key=True, nullable=False)
-    type = db.Column(db.Integer, nullable=False)
+    type = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String)
     evidence = db.Column(db.String, nullable=False)
     severity = db.Column(db.Numeric, nullable=False)
+    responseId = db.Column(db.Integer, nullable=False)
+    uri = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, findingId, type, evidence, severity):
+    def __init__(self, findingId, type, description, evidence, severity, responseId, uri):
         self.findingId = findingId
         self.type = type
         self.evidence = evidence
         self.severity = severity
+        self.responseId = responseId
+        self.uri = uri
+

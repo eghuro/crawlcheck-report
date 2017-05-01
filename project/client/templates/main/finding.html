@@ -33,14 +33,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>http://example.com/lorem.ipsum.txt</td>
-                <td>Invalid content-type</td>
-                <td>43</td>
-                <td>xyz</td>
-                <td>0.5</td>
-                <td><a href="/finding/43">></a></td>
-            </tr>
+            {% for defect in defects %}
+                <tr>
+                    <td> {{defect.uri}} </td>
+                    <td> {{defect.type}}: {{defect.description}} </td>
+                    <td> {{defect.evidence}} </td>
+                    <td> {{defect.severity}} </td>
+                    <td><a href="/finding/{{defect.responseId}}">></a></td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
@@ -54,6 +55,13 @@
             </tr>
         </thead>
         <tbody>
+            {% for link in links %}
+                <tr>
+                    <td> {{link.fromUri}} </td>
+                    <td> {{link.toUri}} </td>
+                    <td> {{link.processed}} </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
   </div>

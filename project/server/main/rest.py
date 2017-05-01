@@ -8,7 +8,7 @@
 from flask import Blueprint, request
 import yaml
 from project.server import db
-from project.server.models import Transaction, Finding, Link, Defect, DefectType
+from project.server.models import Transaction, Link, Defect
 
 
 ################
@@ -27,7 +27,7 @@ rest_blueprint = Blueprint('rest', __name__,)
 def wipe():
     if request.method == 'DELETE':
         cnt = 0
-        tables = [Transaction, Finding, Link, Defect, DefectType]
+        tables = [Transaction, Link, Defect]
         for table in tables:
             records = table.query.all()
             for record in records:
@@ -48,24 +48,18 @@ def update():
                                 record['verificationStatusId'], record['depth'])
                 cnt = cnt + 1
                 db.session.add(t)
-        if 'finding' in data:
-            for record in data['finding']:
-                db.session.add(Finding(record['id'], record['responseId']))
         if 'link' in data:
             for record in data['link']:
-                l = Link(record['findingId'], record['toUri'], record['processed'],
-                         record['requestId'])
+                l = Link(record['findingId'], record['fromUri'], record['toUri'],
+                         record['processed'], record['requestId'], record['responseId'])
+
                 cnt = cnt + 1
                 db.session.add(l)
-        if 'defectType' in data:
-            for record in data['defectType']:
-                dt = DefectType(record['id'], record['type'], record['description'])
-                cnt = cnt + 1
-                db.session.add(dt)
         if 'defect' in data:
             for record in data['defect']:
-                d = Defect(record['findingId'], record['type'], record['evidence'],
-                           record['severity'])
+                d = Defect(record['findingId'], record['type'], record['description'],
+                           record['evidence'], record['severity'], record['responseId'],
+                           record['uri'])
                 cnt = cnt + 1
                 db.session.add(d)
         db.session.commit()

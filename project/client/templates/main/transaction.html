@@ -37,11 +37,13 @@
         </tr></thead>
 
         <tbody>
-            <tr>
-                <td>uri</td>
-                <td>status</td>
-                <td>content type</td>
-            </tr>
+            {% for item in data %}
+                <tr>
+                    <td>{{item.uri}}</td>
+                    <td>{{item.status}}</td>
+                    <td>{{item.ctype}}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
   </div>
