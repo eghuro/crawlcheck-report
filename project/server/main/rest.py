@@ -43,9 +43,9 @@ def update():
         data = yaml.safe_load(request.form['payload'])
         if 'transactions' in data:
             for record in data['transactions']:
-                t = Transaction(record['id'], record['method'], record['responseStatus'],
-                                record['contentType'], record['verificationStatusId'],
-                                record['origin'], record['depth'])
+                t = Transaction(record['id'], record['method'], record['uri'],
+                                record['responseStatus'], record['contentType'],
+                                record['verificationStatusId'], record['depth'])
                 cnt = cnt + 1
                 db.session.add(t)
         if 'finding' in data:

@@ -2,6 +2,7 @@
 
 
 import unittest
+import yaml
 
 from base import BaseTestCase
 
@@ -28,6 +29,32 @@ class TestMainBlueprint(BaseTestCase):
         response = self.client.get('/404')
         self.assert404(response)
         self.assertTemplateUsed('errors/404.html')
+
+    def test_rest(self):
+        response = self.client.delete('/data')
+        self.assertEqual(response.status_code, 200)
+        payload = dict()
+        transaction = dict()
+        transaction['id'] = 1
+        transaction['method'] = 'GET'
+        transaction['responseStatus'] = 200
+        transaction['contentType'] = 'text/html'
+        transaction['verificationStatusId'] = 0
+        transaction['depth'] = 0
+        transaction['uri'] = 'http://localhost'
+        payload['transactions'] = [transaction]
+        
+        response = self.client.post('/data', data={'payload' : yaml.dump(payload)})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(b'Update data: 1', response.data)
+
+        response = self.client.get('/transaction')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'http://localhost', response.data)
+        self.assertIn(b'200', response.data)
+        self.assertIn(b'text/html', response.data)
+
+
 
 
 if __name__ == '__main__':
