@@ -6,6 +6,7 @@
 #################
 
 from flask import render_template, Blueprint
+from sqlalchemy import text
 from project.server import db
 from project.server.models import Transaction, Link, Defect
 
@@ -49,6 +50,6 @@ def links():
 @main_blueprint.route('/finding/<tid>')
 def finding_detail(tid):
     t = Transaction.query.filter_by(id=tid).first()
-    l = Link.query.filter_by(responseId=tid).all()
+    l = db.session.query(Link).from_statement(text("select * from link where responseId=:responseId or requestId=:requestId")).params(requestId=tid, responseId=tid).all()
     d = Defect.query.filter_by(responseId=tid).all()
     return render_template('main/finding_detail.html', transaction=t, links=l, defects=d)
