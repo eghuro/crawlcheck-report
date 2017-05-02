@@ -16,7 +16,10 @@ class TestMainBlueprint(BaseTestCase):
         self.assertIn(b"Crawlcheck's report", response.data)
         self.assertIn(b'All recorded transactions', response.data)
         self.assertIn(b'All findings', response.data)
-        self.assertIn(b'Register/Login', response.data)
+        self.assertIn(b'Transactions', response.data)
+        self.assertIn(b'Defects', response.data)
+        self.assertIn(b'Links', response.data)
+        #self.assertIn(b'Register/Login', response.data)
 
     def test_about(self):
         # Ensure about route behaves correctly.
