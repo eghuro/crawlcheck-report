@@ -36,11 +36,15 @@ def transactions():
     t = Transaction.query.all()
     return render_template('main/transaction.html', data=t) #TODO: statuses, content-types
 
-@main_blueprint.route('/finding')
+@main_blueprint.route('/defect')
 def findings():
-    l = Link.query.all()
     d = Defect.query.all()
-    return render_template('main/finding.html', links=l, defects=d)
+    return render_template('main/defect.html', defects=d)
+
+@main_blueprint.route('/link')
+def links():
+    l = Link.query.all()
+    return render_template('main/link.html', links=l)
 
 @main_blueprint.route('/finding/<tid>')
 def finding_detail(tid):
