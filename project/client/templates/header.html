@@ -10,22 +10,16 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-          <a class="navbar-brand" href="{{ url_for('main.home') }}">Crawlcheck report</a>
+          <a class="navbar-brand" href="{{ url_for('main.home') }}">Crawlcheck's report</a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="{{ url_for('main.about') }}">About</a></li>
-          {% if current_user.is_authenticated %}
-           <li><a href="{{ url_for('user.members') }}">Members</a></li>
-          {% endif %}
+          <li><a href="/transaction">Transactions</a></li>
+          <li><a href="/defect">Defects</a></li>
+          <li><a href="/link">Links</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          {% if current_user.is_authenticated %}
-            <li><a href="{{ url_for('user.logout') }}">Logout</a></li>
-          {% else %}
-            <li><a href="{{ url_for('user.login') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;Register/Login</a></li>
-          {% endif %}
         </ul>
       </div>
       <!-- /.navbar-collapse -->
