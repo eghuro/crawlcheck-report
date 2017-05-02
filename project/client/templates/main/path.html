@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+{% if transaction %}
+
+<div class="body-content">
+  <div class="row">
+    <h1>Path to page</h1>
+
+    <h2>Transaction information</h2>
+    <table border="1" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>URI</th>
+                <th>Method</th>
+                <th>Response status</th>
+                <th>Content type</th>
+                <th>Depth</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{transaction.uri}}</td>
+                <td>{{transaction.method}}</td>
+                <td>{{transaction.status}}</td>
+                <td>{{transaction.ctype}}</td>
+                <td>{{transaction.depth}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><a href="/finding/{{transaction.id}}">Back to transaction details</a></p>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

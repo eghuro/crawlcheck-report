@@ -53,3 +53,9 @@ def finding_detail(tid):
     l = db.session.query(Link).from_statement(text("select * from link where responseId=:responseId or requestId=:requestId")).params(requestId=tid, responseId=tid).all()
     d = Defect.query.filter_by(responseId=tid).all()
     return render_template('main/finding_detail.html', transaction=t, links=l, defects=d)
+
+@main_blueprint.route('/path/<tid>')
+def transaction_path(tid):
+    t = Transaction.query.filter_by(id=tid).first()
+
+    return render_template('main/path.html', transaction=t)
