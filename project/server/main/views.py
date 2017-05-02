@@ -45,6 +45,6 @@ def findings():
 @main_blueprint.route('/finding/<tid>')
 def finding_detail(tid):
     t = Transaction.query.filter_by(id=tid).first()
-    l = Link.query.filter_by(response_id=tid).all()
-    d = Defect.query.filter_by(response_id=tid).all()
+    l = Link.query.filter_by(responseId=tid).all()
+    d = Defect.query.filter_by(responseId=tid).all()
     return render_template('main/finding_detail.html', transaction=t, links=l, defects=d)

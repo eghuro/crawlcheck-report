@@ -97,6 +97,7 @@ class Defect(db.Model):
     def __init__(self, findingId, type, description, evidence, severity, responseId, uri):
         self.findingId = findingId
         self.type = type
+        self.description = description
         self.evidence = evidence
         self.severity = severity
         self.responseId = responseId

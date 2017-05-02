@@ -50,8 +50,9 @@ def update():
                 db.session.add(t)
         if 'link' in data:
             for record in data['link']:
+                processed = record['processed'].lower() == 'true'
                 l = Link(record['findingId'], record['fromUri'], record['toUri'],
-                         record['processed'], record['requestId'], record['responseId'])
+                         processed, record['requestId'], record['responseId'])
 
                 cnt = cnt + 1
                 db.session.add(l)
