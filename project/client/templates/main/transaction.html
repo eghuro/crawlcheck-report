@@ -35,6 +35,7 @@
                     <li>ipsum</li>
                 </ul>
             </th>
+            <th>See details</th>
         </tr></thead>
 
         <tbody>
@@ -43,6 +44,7 @@
                     <td>{{item.uri}}</td>
                     <td>{{item.status}}</td>
                     <td>{{item.ctype}}</td>
+                    <td><a href="/finding/{{item.id}}">></a></td>
                 </tr>
             {% endfor %}
         </tbody>
