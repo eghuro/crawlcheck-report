@@ -52,8 +52,13 @@ def transactions():
 
 @main_blueprint.route('/defect')
 def findings():
-    d = Defect.query.all()
-    return render_template('main/defect.html', defects=d)
+    if 't' in request.args:
+        d = Defect.query.filter_by(type=request.args['t']).all()
+    else:
+        d = Defect.query.all()
+    y = Defect.query.all()
+    types = set([x.type for x in y])
+    return render_template('main/defect.html', defects=d, types=types)
 
 @main_blueprint.route('/link')
 def links():

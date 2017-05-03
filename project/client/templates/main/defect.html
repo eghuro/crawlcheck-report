@@ -23,8 +23,9 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="dtype">
-                        <li>foo</li>
-                        <li>bar</li>
+                        {% for type in types %}
+                            <li>{{type}}</li>
+                        {% endfor %}
                     </ul>
                 </th>
                 <th>Evidence</th>
