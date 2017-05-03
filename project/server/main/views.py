@@ -6,7 +6,7 @@
 #################
 
 import queue
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, request
 from sqlalchemy import text
 from project.server import db
 from project.server.models import Transaction, Link, Defect
@@ -35,9 +35,19 @@ def about():
 
 @main_blueprint.route('/transaction')
 def transactions():
-    t = Transaction.query.all()
-    status = set([x.status for x in t])
-    ctype = set([x.ctype for x in t])
+    if 'ct' in request.args and 's' in request.args:
+        t = Transaction.query.filter_by(status=request.args['s'], ctype=request.args['ct']).all()
+    elif 'ct' in request.args:
+        t = Transaction.query.filter_by(ctype=request.args['ct']).all()
+    elif 's' in request.args:
+        t = Transaction.query.filter_by(status=request.args['s']).all()
+    else:
+        t = Transaction.query.all()
+
+    u = Transaction.query.all()
+    status = set([x.status for x in u])
+    ctype = set([x.ctype for x in u])
+
     return render_template('main/transaction.html', data=t, statuses=status, types=ctype)
 
 @main_blueprint.route('/defect')
