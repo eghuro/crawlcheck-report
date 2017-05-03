@@ -20,9 +20,10 @@
                     Status
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="dtype">
-                    <li>foo</li>
-                    <li>bar</li>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="status">
+                    {% for status in statuses%}
+                        <li>{{status}}</li>
+                    {% endfor %}
                 </ul>
             </th>
             <th class="dropdown">
@@ -30,9 +31,10 @@
                     Content type
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="dtype">
-                    <li>lorem</li>
-                    <li>ipsum</li>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="ctype">
+                    {% for ctype in types %}
+                        <li>{{ctype}}</li>
+                    {% endfor %}
                 </ul>
             </th>
             <th>See details</th>

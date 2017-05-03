@@ -36,7 +36,9 @@ def about():
 @main_blueprint.route('/transaction')
 def transactions():
     t = Transaction.query.all()
-    return render_template('main/transaction.html', data=t) #TODO: statuses, content-types
+    status = set([x.status for x in t])
+    ctype = set([x.ctype for x in t])
+    return render_template('main/transaction.html', data=t, statuses=status, types=ctype)
 
 @main_blueprint.route('/defect')
 def findings():
