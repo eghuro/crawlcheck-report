@@ -22,8 +22,9 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="status">
                     {% for status in statuses%}
-                        <li>{{status}}</li>
+                        <li><a href="?s={{status}}">{{status}}</a></li>
                     {% endfor %}
+                    <li><a href="/transaction">No filter</a></li>
                 </ul>
             </th>
             <th class="dropdown">
@@ -33,8 +34,9 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="ctype">
                     {% for ctype in types %}
-                        <li>{{ctype}}</li>
+                        <li><a href="?ct={{ctype}}">{{ctype}}</a></li>
                     {% endfor %}
+                    <li><a href="/transaction">No filter</a></li>
                 </ul>
             </th>
             <th>See details</th>

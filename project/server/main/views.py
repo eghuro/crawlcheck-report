@@ -35,12 +35,23 @@ def about():
 
 @main_blueprint.route('/transaction')
 def transactions():
+    if 'ct' in request.args:
+        if request.args['ct'] == "None":
+            ct = None
+        else:
+            ct = request.args['ct']
+    if 's' in request.args:
+        if request.args['s'] == "None":
+            t = None
+        else:
+            t = request.args['s']
+
     if 'ct' in request.args and 's' in request.args:
-        t = Transaction.query.filter_by(status=request.args['s'], ctype=request.args['ct']).all()
+        t = Transaction.query.filter_by(status=s, ctype=ct).all()
     elif 'ct' in request.args:
-        t = Transaction.query.filter_by(ctype=request.args['ct']).all()
+        t = Transaction.query.filter_by(ctype=ct).all()
     elif 's' in request.args:
-        t = Transaction.query.filter_by(status=request.args['s']).all()
+        t = Transaction.query.filter_by(status=s).all()
     else:
         t = Transaction.query.all()
 
@@ -51,7 +62,7 @@ def transactions():
     return render_template('main/transaction.html', data=t, statuses=status, types=ctype)
 
 @main_blueprint.route('/defect')
-def findings():
+def defects():
     if 't' in request.args:
         d = Defect.query.filter_by(type=request.args['t']).all()
     else:

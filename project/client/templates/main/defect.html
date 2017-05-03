@@ -24,7 +24,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="dtype">
                         {% for type in types %}
-                            <li>{{type}}</li>
+                            <li><a href="?t={{type}}">{{type}}</a></li>
                         {% endfor %}
                     </ul>
                 </th>
