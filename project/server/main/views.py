@@ -62,7 +62,10 @@ def findings():
 
 @main_blueprint.route('/link')
 def links():
-    l = Link.query.all()
+    if 'p' in request.args:
+        l = Link.query.filter_by(processed=request.args['p']).all()
+    else:
+        l = Link.query.all()
     return render_template('main/link.html', links=l)
 
 @main_blueprint.route('/finding/<tid>')
