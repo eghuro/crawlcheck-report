@@ -16,11 +16,11 @@
     <table border="1" class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>To</th>
                 <th>From</th>
+                <th>To</th>
                 <th>Processed</th>
-                <th>Go to target</th>
                 <th>Go to source</th>
+                <th>Go to target</th>
             </tr>
         </thead>
         <tbody>
@@ -28,9 +28,9 @@
                 <tr>
                     <td> {{link.fromUri}} </td>
                     <td> {{link.toUri}} </td>
-                    <td> {{link.processed}} </td>
+                    <td> {% if link.processed %} YES {% else %} NO {% endif %} </td>
                     <td> <a href="/finding/{{link.responseId}}">></a> </td>
-                    <td> <a href="/finding/{{link.requestId}}">></a> </td>
+                    <td> {% if link.processed %} <a href="/finding/{{link.requestId}}">></a> {%endif %}</td>
                 </tr>
             {% endfor %}
         </tbody>
