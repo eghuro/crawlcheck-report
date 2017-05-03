@@ -57,9 +57,10 @@ def finding_detail(tid):
 
 @main_blueprint.route('/path/<tid>')
 def transaction_path(tid):
-    tr = Transaction.query.filter_by(id=tid).first()
-    transactions = [tr]
+    t0 = Transaction.query.filter_by(id=tid).first()
+    transactions = [t0]
+    tr = t0
     while tr.depth != 0:
         tr = Transaction.query.filter_by(id=tr.parentId).first()
         transactions.append(tr)
-    return render_template('main/path.html', transaction=tr, transactions=transactions)
+    return render_template('main/path.html', transaction=t0, transactions=transactions)
