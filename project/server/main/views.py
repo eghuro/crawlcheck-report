@@ -5,6 +5,7 @@
 #### imports ####
 #################
 
+import queue
 from flask import render_template, Blueprint
 from sqlalchemy import text
 from project.server import db
@@ -56,6 +57,9 @@ def finding_detail(tid):
 
 @main_blueprint.route('/path/<tid>')
 def transaction_path(tid):
-    t = Transaction.query.filter_by(id=tid).first()
-
-    return render_template('main/path.html', transaction=t)
+    tr = Transaction.query.filter_by(id=tid).first()
+    transactions = [tr]
+    while tr.depth != 0:
+        tr = Transaction.query.filter_by(id=tr.parentId).first()
+        transactions.append(tr)
+    return render_template('main/path.html', transaction=tr, transactions=transactions)

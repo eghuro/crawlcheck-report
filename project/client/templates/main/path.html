@@ -31,6 +31,12 @@
     </table>
 
     <p><a href="/finding/{{transaction.id}}">Back to transaction details</a></p>
+
+    <ol>
+        {% for t in transactions %}
+            <li><a href="/finding/{{t.id}}">{{t.uri}}</a> (Level: {{t.depth}})</li>
+        {% endfor %}
+    </ol>
   </div>
 </div>
 {% endif %}

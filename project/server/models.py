@@ -51,8 +51,9 @@ class Transaction(db.Model):
     ctype = db.Column(db.String(255))
     verificationStatusId = db.Column(db.Integer)
     depth = db.Column(db.Integer, nullable=False)
+    parentId = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, id, method, uri, status, ctype, vsi, depth):
+    def __init__(self, id, method, uri, status, ctype, vsi, depth, parentId):
         self.id = id
         self.method = method
         self.uri = uri
@@ -60,6 +61,7 @@ class Transaction(db.Model):
         self.ctype = ctype
         self.verificationStatusId = vsi
         self.depth = depth
+        self.parentId = parentId
 
 
 class Link(db.Model):
