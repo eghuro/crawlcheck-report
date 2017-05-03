@@ -45,6 +45,7 @@ class TestMainBlueprint(BaseTestCase):
         transaction['verificationStatusId'] = 0
         transaction['depth'] = 0
         transaction['uri'] = 'http://localhost'
+        transaction['parentId'] = 1
         payload['transactions'] = [transaction]
         
         response = self.client.post('/data', data={'payload' : yaml.dump(payload)})
