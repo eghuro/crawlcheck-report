@@ -45,7 +45,7 @@ def update():
             for record in data['transactions']:
                 t = Transaction(record['id'], record['method'], record['uri'],
                                 record['responseStatus'], record['contentType'],
-                                record['verificationStatusId'], record['depth'],
+                                record['verificationStatus'], record['depth'],
                                 record['parentId'])
                 cnt = cnt + 1
                 db.session.add(t)
