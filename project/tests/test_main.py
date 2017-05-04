@@ -42,7 +42,7 @@ class TestMainBlueprint(BaseTestCase):
         transaction['method'] = 'GET'
         transaction['responseStatus'] = 200
         transaction['contentType'] = 'text/html'
-        transaction['verificationStatusId'] = 0
+        transaction['verificationStatus'] = 0
         transaction['depth'] = 0
         transaction['uri'] = 'http://localhost'
         transaction['parentId'] = 1
