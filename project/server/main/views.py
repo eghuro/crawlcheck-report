@@ -42,9 +42,9 @@ def transactions():
             ct = request.args['ct']
     if 's' in request.args:
         if request.args['s'] == "None":
-            t = None
+            s = None
         else:
-            t = request.args['s']
+            s = request.args['s']
 
     if 'ct' in request.args and 's' in request.args:
         t = Transaction.query.filter_by(status=s, ctype=ct).all()
