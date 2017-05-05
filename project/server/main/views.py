@@ -64,9 +64,9 @@ def transactions():
 @main_blueprint.route('/defect')
 def defects():
     if 't' in request.args:
-        d = Defect.query.filter_by(type=request.args['t']).all()
+        d = Defect.query.filter_by(type=request.args['t']).order_by(Defect.severity.desc()).all()
     else:
-        d = Defect.query.all()
+        d = Defect.query.order_by(Defect.severity.desc()).all()
     y = Defect.query.all()
     types = set([x.type for x in y])
     return render_template('main/defect.html', defects=d, types=types)
