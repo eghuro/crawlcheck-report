@@ -17,7 +17,13 @@ from project.server.models import Transaction, Link, Defect, Alias
 ################
 
 main_blueprint = Blueprint('main', __name__,)
+page_count = 30
 
+types = set([x.type for x in Defect.query.all()])
+
+u = Transaction.query.all()
+status = set([x.status for x in u])
+ctype = set([x.ctype for x in u])
 
 ################
 #### routes ####
@@ -33,8 +39,9 @@ def home():
 def about():
     return render_template("main/about.html")
 
-@main_blueprint.route('/transaction')
-def transactions():
+@main_blueprint.route('/transaction/', defaults={'page' : 1})
+@main_blueprint.route('/transaction/page/<int:page>')
+def transactions(page):
     if 'ct' in request.args:
         if request.args['ct'] == "None":
             ct = None
@@ -47,36 +54,33 @@ def transactions():
             s = request.args['s']
 
     if 'ct' in request.args and 's' in request.args:
-        t = Transaction.query.filter_by(status=s, ctype=ct).all()
+        t = Transaction.query.filter_by(status=s, ctype=ct).paginate(page=page, per_page=page_count)
     elif 'ct' in request.args:
-        t = Transaction.query.filter_by(ctype=ct).all()
+        t = Transaction.query.filter_by(ctype=ct).paginate(page=page, per_page=page_count)
     elif 's' in request.args:
-        t = Transaction.query.filter_by(status=s).all()
+        t = Transaction.query.filter_by(status=s).paginate(page=page, per_page=page_count)
     else:
-        t = Transaction.query.all()
-
-    u = Transaction.query.all()
-    status = set([x.status for x in u])
-    ctype = set([x.ctype for x in u])
+        t = Transaction.query.paginate(page=page, per_page=page_count)
 
     return render_template('main/transaction.html', data=t, statuses=status, types=ctype)
 
-@main_blueprint.route('/defect')
-def defects():
+@main_blueprint.route('/defect/', defaults={'page' : 1})
+@main_blueprint.route('/defect/page/<int:page>')
+def defects(page):
     if 't' in request.args:
-        d = Defect.query.filter_by(type=request.args['t']).order_by(Defect.severity.desc()).all()
+        d = Defect.query.filter_by(type=request.args['t']).order_by(Defect.severity.desc()).paginate(page=page, per_page=page_count)
     else:
-        d = Defect.query.order_by(Defect.severity.desc()).all()
-    y = Defect.query.all()
-    types = set([x.type for x in y])
+        d = Defect.query.order_by(Defect.severity.desc()).paginate(page=page, per_page=page_count)
+
     return render_template('main/defect.html', defects=d, types=types)
 
-@main_blueprint.route('/link')
-def links():
+@main_blueprint.route('/link/', defaults={'page' : 1})
+@main_blueprint.route('/link/page/<int:page>')
+def links(page):
     if 'p' in request.args:
-        l = Link.query.filter_by(processed=request.args['p']).all()
+        l = Link.query.filter_by(processed=request.args['p']).paginate(page=page, per_page=page_count)
     else:
-        l = Link.query.all()
+        l = Link.query.paginate(page=page, per_page=page_count)
     return render_template('main/link.html', links=l)
 
 @main_blueprint.route('/finding/<tid>')

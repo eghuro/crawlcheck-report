@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for link in links %}
+            {% for link in links.items %}
                 <tr>
                     <td> {{link.fromUri}} </td>
                     <td> {{link.toUri}} </td>
@@ -45,6 +45,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <p>Page {{links.page}} / {{links.pages}}
+       {% if links.page != 1 %} <a href="/link/page/{{links.prev_num}}">Previous</a> {% endif %}
+       {% if links.page != links.pages %} <a href="/link/page/{{links.next_num}}">Next</a> {% endif %}</p>
   </div>
 </div>
 

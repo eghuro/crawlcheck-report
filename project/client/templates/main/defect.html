@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for defect in defects %}
+            {% for defect in defects.items %}
                 <tr>
                     <td> {{defect.uri}} </td>
                     <td> {{defect.type}}: {{defect.description}} </td>
@@ -45,6 +45,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <p>Page {{defects.page}} / {{defects.pages}}
+       {% if defects.page != 1 %} <a href="/defect/page/{{defects.prev_num}}">Previous</a> {% endif %}
+       {% if defects.page != defects.pages %} <a href="/defect/page/{{defects.next_num}}">Next</a> {% endif %}</p>
   </div>
 </div>
 
