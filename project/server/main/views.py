@@ -90,6 +90,8 @@ def links(page):
 @main_blueprint.route('/finding/<tid>')
 def finding_detail(tid):
     t = Transaction.query.filter_by(id=tid).first()
+    if t is None:
+        return render_template('errors/404.html')
     a = Alias.query.filter_by(transactionId=tid).all()
     l = db.session.query(Link).from_statement(text("select * from link where responseId=:responseId or requestId=:requestId")).params(requestId=tid, responseId=tid).all()
     d = Defect.query.filter_by(responseId=tid).all()
@@ -98,6 +100,8 @@ def finding_detail(tid):
 @main_blueprint.route('/path/<tid>')
 def transaction_path(tid):
     t0 = Transaction.query.filter_by(id=tid).first()
+    if t0 is None:
+        return render_template('errors/404.html')
     transactions = [t0]
     tr = t0
     while tr.depth != 0:
