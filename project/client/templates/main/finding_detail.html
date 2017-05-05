@@ -50,7 +50,7 @@
         <tbody>
             {% for defect in defects %}
                 <tr>
-                    <td> {{defect.type}}: {{defect.description}} </td>
+                    <td> <a href="/defect/?t={{defect.type}}">{{defect.type}}: {{defect.description}}</a> </td>
                     <td> {{defect.evidence}} </td>
                     <td> {{defect.severity}} </td>
                 </tr>
