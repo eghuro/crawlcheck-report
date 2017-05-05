@@ -87,4 +87,28 @@ def visual_export():
     data['defect-type-count-array'] = [data[dtc][key] for key in data[dtc].keys()]
     data['defect-type-label-array'] = [key for key in data[dtc].keys()]
 
+    data['severity-values'] = list(set([float(d.severity) for d in defects]))
+    data['defect-type-severity'] = dict()
+    for d in defects:
+        data['defect-type-severity'][d.type]=float(d.severity)
+
+
     return json.dumps(data)
+
+@rest_blueprint.route('/data/network', methods=['GET'])
+def getNetJson():
+    jsn = dict()
+
+    t = Transaction.query.all()
+    l = Link.query.all()
+
+    jsn['type'] = 'NetworkGraph'
+    jsn['label'] = 'Link network'
+    jsn['protocol'] = 'OLSR'
+    jsn['version'] = '0.6.6.2'
+    jsn['metric'] = 'ETX'
+    jsn['nodes'] = [ {"id" : x.id, "label" : x.uri } for x in t ]
+    validIds = set([x.id for x in t])
+    jsn['links'] = [ {"source" : x.requestId, "target" : x.responseId} for x in l if x.requestId in validIds and x.responseId in validIds]
+
+    return json.dumps(jsn)

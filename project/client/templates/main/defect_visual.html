@@ -28,20 +28,34 @@
     </ul>
 
     <h2>Defects</h2>
-    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
-        <div class="chart"></div>
-        <script type="text/javascript">
-            d3.json("/data", function(json) {
-                var x = d3.scale.linear().domain([0, d3.max(json["defect-type-count-array"])]).range([0, 1000]);
-                var value = function(key) { return json["defect-type-count"][key]; }
-                var description = function(key) { return key + " ("+ value(key) + ")"; }
-                d3.select(".chart").selectAll("div").data(json["defect-type-label-array"])
-                    .enter().append("div").style("width", function(d) { return x(value(d)) + "px"; })
-                    .text(function(d) { return description(d); });
-            });
-        </script>
+    <h3>Defect quantities</h3>
+        <p>Following chart shows absolute quantites of individual defect type. The colour represents severity of the defect type.</p>
+        <div class="chart" id="chart0"></div>
+
     <p><a href="/defect/">-> Back to data</a></p>
   </div>
 </div>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+        d3.json("/data", function(json) {
+            var x = d3.scale.linear().domain([0, d3.max(json["defect-type-count-array"])]).range([0, 1000]);
+            var y = d3.scale.linear().domain([d3.min(json['severity-values']), d3.max(json['severity-values'])])
+                            .range(["green", "red"]);
+            var value = function(key) { return json["defect-type-count"][key]; }
+            var severity = function(key) { return json["defect-type-severity"][key]; }
+            var description = function(key) { return key + " ("+ value(key) + ")"; }
+            
+            //chart 0
+            d3.select("#chart0").selectAll("div").data(json["defect-type-label-array"])
+              .enter().append("div").style("width", function(d) { return x(value(d)) + "px"; })
+              .style("background-color", function(d) { return y(severity(d)); })
+              .text(function(d) { return description(d); });
+
+        });
+    </script>
 
 {% endblock %}
