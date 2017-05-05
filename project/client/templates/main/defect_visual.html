@@ -1,0 +1,47 @@
+{% extends "_base.html" %}
+
+{% block css %}
+
+<style>
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: black;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="body-content">
+  <div class="row">
+    <h1>Findings</h1>
+
+    <ul class="nav nav-tabs" tole="tablist">
+        <li><a href="/transaction">Transactions</a></li>
+        <li class="active"><a href="/defect">Defects</a></li>
+        <li><a href="/link">Links</a></li>
+    </ul>
+
+    <h2>Defects</h2>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+        <div class="chart"></div>
+        <script type="text/javascript">
+            d3.json("/data", function(json) {
+                var x = d3.scale.linear().domain([0, d3.max(json["defect-type-count-array"])]).range([0, 1000]);
+                var value = function(key) { return json["defect-type-count"][key]; }
+                var description = function(key) { return key + " ("+ value(key) + ")"; }
+                d3.select(".chart").selectAll("div").data(json["defect-type-label-array"])
+                    .enter().append("div").style("width", function(d) { return x(value(d)) + "px"; })
+                    .text(function(d) { return description(d); });
+            });
+        </script>
+    <p><a href="/defect/">-> Back to data</a></p>
+  </div>
+</div>
+
+{% endblock %}

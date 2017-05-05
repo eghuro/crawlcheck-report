@@ -7,8 +7,10 @@
 
 from flask import Blueprint, request
 import yaml
+import json
 from project.server import db
 from project.server.models import Transaction, Link, Defect, Alias
+from sqlalchemy import select
 
 
 ################
@@ -68,3 +70,21 @@ def update():
                 db.session.add(d)
         db.session.commit()
         return "Update data: " + str(cnt)
+
+@rest_blueprint.route('/data', methods=['GET'])
+def visual_export():
+    data = dict()
+
+    defects = Defect.query.all()
+
+    dtc = 'defect-type-count'
+    data[dtc] = dict()
+    for d in defects:
+        if d.type not in data[dtc]:
+            data[dtc][d.type] = 0
+        data[dtc][d.type] = data[dtc][d.type] + 1
+
+    data['defect-type-count-array'] = [data[dtc][key] for key in data[dtc].keys()]
+    data['defect-type-label-array'] = [key for key in data[dtc].keys()]
+
+    return json.dumps(data)

@@ -74,6 +74,10 @@ def defects(page):
 
     return render_template('main/defect.html', defects=d, types=types)
 
+@main_blueprint.route('/defect/visual/')
+def defects_visual():
+    return render_template('main/defect_visual.html')
+
 @main_blueprint.route('/link/', defaults={'page' : 1})
 @main_blueprint.route('/link/page/<int:page>')
 def links(page):
