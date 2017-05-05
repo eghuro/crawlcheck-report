@@ -9,7 +9,7 @@ import queue
 from flask import render_template, Blueprint, request
 from sqlalchemy import text
 from project.server import db
-from project.server.models import Transaction, Link, Defect
+from project.server.models import Transaction, Link, Defect, Alias
 
 
 ################
@@ -82,9 +82,10 @@ def links():
 @main_blueprint.route('/finding/<tid>')
 def finding_detail(tid):
     t = Transaction.query.filter_by(id=tid).first()
+    a = Alias.query.filter_by(transactionId=tid).all()
     l = db.session.query(Link).from_statement(text("select * from link where responseId=:responseId or requestId=:requestId")).params(requestId=tid, responseId=tid).all()
     d = Defect.query.filter_by(responseId=tid).all()
-    return render_template('main/finding_detail.html', transaction=t, links=l, defects=d)
+    return render_template('main/finding_detail.html', transaction=t, aliases=a, links=l, defects=d)
 
 @main_blueprint.route('/path/<tid>')
 def transaction_path(tid):

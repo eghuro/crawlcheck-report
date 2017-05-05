@@ -8,7 +8,7 @@
 from flask import Blueprint, request
 import yaml
 from project.server import db
-from project.server.models import Transaction, Link, Defect
+from project.server.models import Transaction, Link, Defect, Alias
 
 
 ################
@@ -27,14 +27,11 @@ rest_blueprint = Blueprint('rest', __name__,)
 def wipe():
     if request.method == 'DELETE':
         cnt = 0
-        tables = [Transaction, Link, Defect]
+        tables = [Transaction, Link, Defect, Alias]
         for table in tables:
-            records = table.query.all()
-            for record in records:
-                db.session.delete(record)
-                cnt = cnt + 1
+            records = table.query.delete()
         db.session.commit()
-        return "Wipe data: " + str(cnt)
+        return "Wipe all data"
 
 @rest_blueprint.route('/data', methods = ['POST'])
 def update():
@@ -49,6 +46,11 @@ def update():
                                 record['parentId'])
                 cnt = cnt + 1
                 db.session.add(t)
+                for alias in record['aliases']:
+                    a = Alias(record['id'], alias)
+                    cnt = cnt + 1
+                    db.session.add(a)
+
         if 'link' in data:
             for record in data['link']:
                 processed = record['processed'].lower() == 'true'

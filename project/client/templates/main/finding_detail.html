@@ -21,7 +21,13 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{transaction.uri}}</td>
+                <td>
+                    <ul>
+                        {% for alias in aliases %}
+                            <li>{{alias.uri}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
                 <td>{{transaction.method}}</td>
                 <td>{{transaction.status}}</td>
                 <td>{{transaction.ctype}}</td>

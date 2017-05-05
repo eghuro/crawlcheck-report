@@ -64,6 +64,18 @@ class Transaction(db.Model):
         self.parentId = parentId
 
 
+class Alias(db.Model):
+
+    __tablename__ = "aliases"
+
+    transactionId = db.Column(db.Integer, nullable=False)
+    uri = db.Column(db.String(255), primary_key=True, nullable=False)
+
+    def __init__(self, tid, uri):
+        self.transactionId = tid
+        self.uri = uri
+
+
 class Link(db.Model):
 
     __tablename__ = "link"
