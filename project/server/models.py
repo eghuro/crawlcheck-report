@@ -83,14 +83,16 @@ class Link(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     fromUri = db.Column(db.String(255), nullable=False)
     toUri = db.Column(db.String(255), nullable=False)
+    good = db.Column(db.Boolean, nullable=False)
     processed = db.Column(db.Boolean, nullable=False)
     requestId = db.Column(db.Integer)
     responseId = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, id, fromUri, toUri, processed, requestId, responseId):
+    def __init__(self, id, fromUri, toUri, good, processed, requestId, responseId):
         self.id = id
         self.toUri = toUri
         self.fromUri = fromUri
+        self.good = good
         self.processed = processed
         self.requestId = requestId
         self.responseId = responseId
