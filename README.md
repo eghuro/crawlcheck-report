@@ -4,10 +4,10 @@ It's a Flask based app. For detailed settings please refer to Flask documentatio
 Basic usage:
  * Use virtualenv and install dependencies
    ```sh
-    $ virtualenv venv
-    $ source venv/bin/activate
-    $ pip install -r requirements.txt
-    ```
+   $ virtualenv venv
+   $ source venv/bin/activate
+   $ pip install -r requirements.txt
+   ```
 
  * Create database
    ```sh
