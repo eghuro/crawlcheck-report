@@ -8,6 +8,7 @@
 import queue
 from flask import render_template, Blueprint, request
 from sqlalchemy import text
+from sqlalchemy.exc import OperationalError
 from project.server import db
 from project.server.models import Transaction, Link, Defect, Alias
 
@@ -19,11 +20,17 @@ from project.server.models import Transaction, Link, Defect, Alias
 main_blueprint = Blueprint('main', __name__,)
 page_count = 30
 
-types = set([x.type for x in Defect.query.all()])
+try:
+    types = set([x.type for x in Defect.query.all()])
 
-u = Transaction.query.all()
-status = set([x.status for x in u])
-ctype = set([x.ctype for x in u])
+    u = Transaction.query.all()
+    status = set([x.status for x in u])
+    ctype = set([x.ctype for x in u])
+except OperationalError:
+    types = set([])
+    u = []
+    status = set([])
+    ctype = set([])
 
 ################
 #### routes ####
