@@ -94,14 +94,6 @@ def links(page):
         l = Link.query.paginate(page=page, per_page=page_count)
     return render_template('main/link.html', links=l)
 
-@main_blueprint.route('/link/visual/')
-def links_visual():
-    return render_template('main/link_visual.html')
-
-@main_blueprint.route('/link/visual/network/')
-def links_visual_network():
-    return render_template('main/link_visual_net.html')
-
 @main_blueprint.route('/finding/<tid>')
 def finding_detail(tid):
     t = Transaction.query.filter_by(id=tid).first()

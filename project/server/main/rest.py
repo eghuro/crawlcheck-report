@@ -6,7 +6,7 @@
 #################
 
 from flask import Blueprint, request
-import yaml
+from ruamel import yaml
 import json
 from project.server import db
 from project.server.models import Transaction, Link, Defect, Alias
@@ -54,10 +54,10 @@ def update():
 
         if 'link' in data:
             for record in data['link']:
-                processed = record['processed'].lower() == 'true'
                 good = record['good']
                 l = Link(record['findingId'], record['fromUri'], record['toUri'],
-                         good, processed, record['requestId'], record['responseId'])
+                         good, record['processed'], record['requestId'],
+                         record['responseId'])
 
                 cnt = cnt + 1
                 db.session.add(l)

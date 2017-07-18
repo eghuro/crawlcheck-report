@@ -68,8 +68,9 @@ class Alias(db.Model):
 
     __tablename__ = "aliases"
 
+    id = db.Column(db.Integer, primary_key=True, nullable=False)
     transactionId = db.Column(db.Integer, nullable=False)
-    uri = db.Column(db.String(255), primary_key=True, nullable=False)
+    uri = db.Column(db.String(255), nullable=False)
 
     def __init__(self, tid, uri):
         self.transactionId = tid
