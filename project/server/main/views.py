@@ -101,7 +101,7 @@ def finding_detail(tid):
         return render_template('errors/404.html')
     a = Alias.query.filter_by(transactionId=tid).all()
     l = db.session.query(Link).from_statement(text("select * from link where responseId=:responseId or requestId=:requestId")).params(requestId=tid, responseId=tid).all()
-    d = Defect.query.filter_by(responseId=tid).all()
+    d = Defect.query.filter_by(responseId=tid).order_by(Defect.severity.desc()).all()
     return render_template('main/finding_detail.html', transaction=t, aliases=a, links=l, defects=d)
 
 @main_blueprint.route('/path/<tid>')
